@@ -24,7 +24,7 @@ const pathData: string = 'M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23
 })
 export class AppComponent {
   title = 'SwimLaneTree';
-  @ViewChild('diagram') public diagram: DiagramComponent;
+  @ViewChild('diagram') public diagram!: DiagramComponent;
 
   constructor() {}
 

@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {
-  DiagramComponent, NodeModel, ConnectorModel, PaletteModel,
-  SnapSettingsModel, SnapConstraints, SymbolPaletteComponent, PointPortModel, PortVisibility,
-  PortConstraints, ContextMenuSettingsModel, IDragEnterEventArgs, DiagramBeforeMenuOpenEventArgs,
-  SwimLaneModel, Node,
-  SymbolInfo,
-  LaneModel,
-  randomId,
-  cloneObject, ShapeStyleModel,
-  HeaderModel,
+  ConnectorModel,
+  ContextMenuSettingsModel,
+  DiagramComponent,
+  NodeModel,
+  PointPortModel,
+  PortConstraints,
+  PortVisibility,
+  SnapConstraints,
+  SnapSettingsModel,
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 
@@ -259,9 +259,10 @@ export class AppComponent {
   public gridlines = {lineColor: '#e0e0e0', lineIntervals: this.interval};
 
   public snapSettings: SnapSettingsModel = {
-    horizontalGridlines: this.gridlines,
-    verticalGridlines: this.gridlines,
-    constraints: SnapConstraints.All && SnapConstraints.ShowLines
+    // horizontalGridlines: this.gridlines,
+    // verticalGridlines: this.gridlines,
+    // constraints: SnapConstraints.All && SnapConstraints.ShowLines
+    constraints: SnapConstraints.None
   };
 
   public contextMenuSettings: ContextMenuSettingsModel = {
@@ -303,6 +304,12 @@ export class AppComponent {
   public getNodeDefaults(node: NodeModel) {
     node.style = {strokeColor: '#717171'};
     return node;
+    // const nodeObject: NodeModel = {};
+    // nodeObject.shape = {type: 'Basic', shape: 'Rectangle'};
+    // nodeObject.style = {strokeWidth: 1};
+    // nodeObject.width = 95;
+    // nodeObject.height = 30;
+    // return nodeObject;
   }
 
   // public dragEnter(arg: IDragEnterEventArgs): void {
@@ -339,13 +346,10 @@ export class AppComponent {
 
   contextMenuOpen(args: BeforeOpenCloseMenuEventArgs): void {
     // do your custom action here.
-    for (const item of args.items) {
-      // if (item.text === 'delete') {
-      //   if (!this.diagram.selectedItems.nodes?.length && !this.diagram.selectedItems.connectors?.length) {
-      //     args.hiddenItems.push(item.text);
-      //   }
-      // }
-      args.items.push(item);
+    if (args.items.length > 0){
+      for (const item of args.items) {
+        args.items.push(item);
+      }
     }
   }
 

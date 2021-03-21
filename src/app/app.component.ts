@@ -1,8 +1,10 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {
+  ConnectorConstraints,
   ConnectorModel,
   ContextMenuSettingsModel,
   DiagramComponent,
+  NodeConstraints,
   NodeModel,
   PointPortModel,
   PortConstraints,
@@ -71,9 +73,9 @@ export class AppComponent {
           {
             id: 'stackCanvas1',
             header: {
-              annotation: {content: 'Consumer'},
+              annotation: {content: ''},
               width: 50,
-              style: {fontSize: 11},
+              style: {fontSize: 11, fill: 'transparent'},
             },
             height: 100,
             children: [
@@ -81,139 +83,476 @@ export class AppComponent {
                 id: 'node1',
                 annotations: [
                   {
-                    content: 'Consumer learns \n of product',
-                    style: {fontSize: 11},
+                    content: 'START',
+                    style: {fontSize: 12, color: 'white', bold: true},
                   },
                 ],
-                margin: {left: 60, top: 30},
+                margin: {left: 650, top: 30},
                 height: 40,
                 width: 100,
                 ports: this.port,
-              },
-              {
-                id: 'node2',
-                shape: {type: 'Flow', shape: 'Decision'},
-                annotations: [
-                  {
-                    content: 'Does \nConsumer want \nthe product',
-                    style: {fontSize: 11},
-                  },
-                ],
-                margin: {left: 200, top: 20},
-                height: 60,
-                width: 120,
-                ports: this.port,
-              },
-              {
-                id: 'node3',
-                annotations: [
-                  {
-                    content: 'No sales lead',
-                    style: {fontSize: 11},
-                  },
-                ],
-                margin: {left: 370, top: 30},
-                shape: {type: 'Path', data: pathData},
-                height: 40,
-                width: 100,
-                ports: this.port,
-              },
-              {
-                id: 'node4',
-                annotations: [
-                  {
-                    content: 'Sell to consumer',
-                    style: {fontSize: 11},
-                  },
-                ],
-                margin: {left: 510, top: 30},
-                height: 40,
-                width: 100,
-                ports: this.port,
-              },
+                style: {fill: '#6495ED'}
+              }
             ],
           },
           {
             id: 'stackCanvas2',
             header: {
-              annotation: {content: 'Marketing'},
+              annotation: {content: 'PolicyDecision'},
               width: 50,
-              style: {fontSize: 11},
+              style: {fontSize: 10, fill: 'transparent'},
             },
             height: 100,
             children: [
               {
-                id: 'node5',
-                annotations: [{content: 'Create marketing campaigns'}],
-                margin: {left: 60, top: 20},
+                id: 'node2',
+                annotations: [{
+                  content: 'ByPerson',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 220, top: 20},
                 height: 40,
                 width: 100,
                 ports: this.port,
+                style: {fill: '#6495ED'}
               },
               {
-                id: 'node6',
-                annotations: [{content: 'Marketing finds sales leads'}],
-                margin: {left: 210, top: 20},
+                id: 'node3',
+                annotations: [{
+                  content: 'Fail',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 650, top: 20},
                 height: 40,
                 width: 100,
                 ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node4',
+                annotations: [{
+                  content: 'Pass',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 910, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node5',
+                annotations: [{
+                  content: 'Else',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 1120, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
               },
             ],
           },
           {
             id: 'stackCanvas3',
             header: {
-              annotation: {content: 'Sales'},
+              annotation: {content: 'WorkYear'},
               width: 50,
-              style: {fontSize: 11},
+              style: {fontSize: 11, fill: 'transparent'},
             },
             height: 100,
             children: [
               {
-                id: 'node7',
-                annotations: [{content: 'Sales receives lead'}],
-                margin: {left: 210, top: 30},
+                id: 'node6',
+                annotations: [{
+                  content: 'LOW...4',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 125, top: 30},
                 height: 40,
                 width: 100,
                 ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node7',
+                annotations: [{
+                  content: '5...19',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 280, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node8',
+                annotations: [{
+                  content: '20...HIGH',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 385, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node9',
+                annotations: [{
+                  content: 'LOW...4',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 542.5, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node10',
+                annotations: [{
+                  content: '5...HIGH',
+                  style: {fontSize: 12, color: 'white', bold: true}
+                }],
+                margin: {left: 750, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
               },
             ],
           },
           {
             id: 'stackCanvas4',
             header: {
-              annotation: {content: 'Success'},
+              annotation: {content: 'AScore'},
               width: 50,
-              style: {fontSize: 11},
+              style: {fontSize: 11, fill: 'transparent'},
             },
             height: 100,
             children: [
               {
-                id: 'node8',
+                id: 'node11',
                 annotations: [
                   {
-                    content:
-                      'Success helps \n retain consumer \n as a customer',
+                    content: 'LOW...79',
+                    style: {fontSize: 12, color: 'white', bold: true}
                   },
                 ],
-                margin: {left: 510, top: 20},
-                height: 50,
+                margin: {left: 50, top: 20},
+                height: 40,
                 width: 100,
                 ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node12',
+                annotations: [
+                  {
+                    content: '80...HIGH',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 175, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node13',
+                annotations: [
+                  {
+                    content: 'LOW...79',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 490, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node14',
+                annotations: [
+                  {
+                    content: '80...HIGH',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 595, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node15',
+                annotations: [
+                  {
+                    content: 'LOW...79',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 700, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node16',
+                annotations: [
+                  {
+                    content: '80...HIGH',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 805, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node17',
+                annotations: [
+                  {
+                    content: 'LOW...44.99',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 1015, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node18',
+                annotations: [
+                  {
+                    content: '45...58.99',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 1120, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+              {
+                id: 'node19',
+                annotations: [
+                  {
+                    content: '59...HIGH',
+                    style: {fontSize: 12, color: 'white', bold: true}
+                  },
+                ],
+                margin: {left: 1225, top: 20},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#6495ED'}
+              },
+            ],
+          },
+          {
+            id: 'stackCanvas5',
+            header: {
+              annotation: {content: 'Assignment'},
+              width: 50,
+              style: {fontSize: 12, fill: '#BDB76B'},
+            },
+            height: 100,
+            children: [
+              {
+                id: 'node20',
+                annotations: [
+                  {
+                    content: 'T2',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 50, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node21',
+                annotations: [
+                  {
+                    content: 'T1',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 175, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node22',
+                annotations: [
+                  {
+                    content: 'NOT ASSIGNED',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 280, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node23',
+                annotations: [
+                  {
+                    content: 'NOT ASSIGNED',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 385, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node24',
+                annotations: [
+                  {
+                    content: 'T2',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 490, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node25',
+                annotations: [
+                  {
+                    content: 'T1',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 595, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node26',
+                annotations: [
+                  {
+                    content: 'T2',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 700, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node27',
+                annotations: [
+                  {
+                    content: 'T1',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 805, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node28',
+                annotations: [
+                  {
+                    content: 'NOT ASSIGNED',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 910, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node29',
+                annotations: [
+                  {
+                    content: 'T2',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 1015, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node30',
+                annotations: [
+                  {
+                    content: 'NOT ASSIGNED',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 1120, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
+              },
+              {
+                id: 'node31',
+                annotations: [
+                  {
+                    content: 'NOT ASSIGNED',
+                    style: {fontSize: 12, bold: true},
+                  },
+                ],
+                margin: {left: 1225, top: 30},
+                height: 40,
+                width: 100,
+                ports: this.port,
+                style: {fill: '#BDB76B'}
               },
             ],
           },
         ]
       },
-      offsetX: 390,
-      offsetY: 320,
+      offsetX: 620,
+      offsetY: 300,
       height: 100,
-      width: 650,
+      width: 1300,
     },
   ];
 
   // Initializes the connectors for the diagram.
   public connectors: ConnectorModel[] = [
+    // Level1
     {
       id: 'connector1',
       sourceID: 'node1',
@@ -221,37 +560,106 @@ export class AppComponent {
     },
     {
       id: 'connector2',
-      sourceID: 'node2',
+      sourceID: 'node1',
       targetID: 'node3',
-      annotations: [{content: 'No', style: {fill: 'white'}}],
     },
     {
       id: 'connector3',
-      sourceID: 'node4',
-      targetID: 'node8',
+      sourceID: 'node1',
+      targetID: 'node4',
     },
     {
       id: 'connector4',
-      sourceID: 'node2',
-      targetID: 'node6',
-      annotations: [{content: 'Yes', style: {fill: 'white'}}],
+      sourceID: 'node1',
+      targetID: 'node5',
     },
+    // Level2
     {
       id: 'connector5',
-      sourceID: 'node5',
-      targetID: 'node1',
+      sourceID: 'node2',
+      targetID: 'node6',
     },
     {
       id: 'connector6',
-      sourceID: 'node6',
+      sourceID: 'node2',
       targetID: 'node7',
     },
     {
       id: 'connector7',
+      sourceID: 'node2',
+      targetID: 'node8',
+    },
+    {
+      id: 'connector8',
+      sourceID: 'node3',
+      targetID: 'node9',
+    },
+    {
+      id: 'connector9',
+      sourceID: 'node3',
+      targetID: 'node10',
+    },
+    {
+      id: 'connector10',
       sourceID: 'node4',
-      targetID: 'node7',
-      sourcePortID: 'Port1',
-      targetPortID: 'Port3',
+      targetID: 'node28',
+    },
+    {
+      id: 'connector11',
+      sourceID: 'node5',
+      targetID: 'node17',
+    },
+    {
+      id: 'connector12',
+      sourceID: 'node5',
+      targetID: 'node18',
+    },
+    {
+      id: 'connector13',
+      sourceID: 'node5',
+      targetID: 'node19',
+    },
+    // Level3
+    {
+      id: 'connector14',
+      sourceID: 'node6',
+      targetID: 'node11',
+    },
+    {
+      id: 'connector15',
+      sourceID: 'node6',
+      targetID: 'node12',
+    },
+    {
+      id: 'connector16',
+      sourceID: 'node9',
+      targetID: 'node13',
+    },
+    {
+      id: 'connector17',
+      sourceID: 'node9',
+      targetID: 'node14',
+    },
+    {
+      id: 'connector18',
+      sourceID: 'node10',
+      targetID: 'node15',
+    },
+    {
+      id: 'connector19',
+      sourceID: 'node10',
+      targetID: 'node16',
+    },
+    // Level4
+    {
+      id: 'connector20',
+      sourceID: 'node7',
+      targetID: 'node22',
+    },
+    {
+      id: 'connector21',
+      sourceID: 'node8',
+      targetID: 'node23',
     },
   ];
 
@@ -295,14 +703,17 @@ export class AppComponent {
 
   public getConnectorDefaults(connector: ConnectorModel): ConnectorModel {
     connector.type = 'Orthogonal';
+    connector.targetDecorator = {shape : 'None'};
     connector.style = {strokeColor: '#717171'};
     connector.sourceDecorator = {style: {strokeColor: '#717171', fill: '#717171'}};
     connector.targetDecorator = {style: {strokeColor: '#717171', fill: '#717171'}};
+    connector.constraints = ConnectorConstraints.None;
     return connector;
   }
 
   public getNodeDefaults(node: NodeModel) {
     node.style = {strokeColor: '#717171'};
+    // node.constraints = NodeConstraints.None;
     return node;
     // const nodeObject: NodeModel = {};
     // nodeObject.shape = {type: 'Basic', shape: 'Rectangle'};

@@ -4,13 +4,13 @@ import {
   ConnectorModel,
   ContextMenuSettingsModel,
   DiagramComponent,
-  NodeConstraints,
+  DiagramConstraints,
   NodeModel,
   PointPortModel,
   PortConstraints,
   PortVisibility,
   SnapConstraints,
-  SnapSettingsModel,
+  SnapSettingsModel
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 
@@ -27,6 +27,7 @@ const pathData: string = 'M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23
 export class AppComponent {
   title = 'SwimLaneTree';
   @ViewChild('diagram') public diagram!: DiagramComponent;
+  // public constraints: DiagramConstraints = DiagramConstraints.None;
 
   constructor() {}
 
@@ -699,6 +700,7 @@ export class AppComponent {
 
   public created(): void {
     this.diagram.fitToPage();
+    this.diagram.constraints = DiagramConstraints.None;
   }
 
   public getConnectorDefaults(connector: ConnectorModel): ConnectorModel {

@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation, OnInit} from '@angular/core';
 import {
   ConnectorConstraints,
   ConnectorModel,
@@ -10,9 +10,11 @@ import {
   PortConstraints,
   PortVisibility,
   SnapConstraints,
-  SnapSettingsModel
+  SnapSettingsModel,
+  LaneModel
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
+import {SwimLaneModel} from '@syncfusion/ej2-diagrams/src/diagram/objects/node-model';
 
 const pathData: string = 'M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23.135' +
     ' 50 C 10.3578 50 0 38.8072 0 24.9999 L 0 24.9999 C' +
@@ -24,12 +26,17 @@ const pathData: string = 'M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'SwimLaneTree';
   @ViewChild('diagram') public diagram!: DiagramComponent;
+  lanes!: LaneModel[];
   // public constraints: DiagramConstraints = DiagramConstraints.None;
 
   constructor() {}
+
+  ngOnInit() {
+
+  }
 
   public port: PointPortModel[] = [
     {
@@ -662,6 +669,51 @@ export class AppComponent {
       sourceID: 'node8',
       targetID: 'node23',
     },
+    {
+      id: 'connector22',
+      sourceID: 'node11',
+      targetID: 'node20',
+    },
+    {
+      id: 'connector23',
+      sourceID: 'node12',
+      targetID: 'node21',
+    },
+    {
+      id: 'connector24',
+      sourceID: 'node13',
+      targetID: 'node24',
+    },
+    {
+      id: 'connector25',
+      sourceID: 'node14',
+      targetID: 'node25',
+    },
+    {
+      id: 'connector26',
+      sourceID: 'node15',
+      targetID: 'node26',
+    },
+    {
+      id: 'connector27',
+      sourceID: 'node16',
+      targetID: 'node27',
+    },
+    {
+      id: 'connector28',
+      sourceID: 'node17',
+      targetID: 'node29',
+    },
+    {
+      id: 'connector29',
+      sourceID: 'node18',
+      targetID: 'node30',
+    },
+    {
+      id: 'connector30',
+      sourceID: 'node19',
+      targetID: 'node31',
+    },
   ];
 
   public interval = [1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75];
@@ -701,12 +753,16 @@ export class AppComponent {
   public created(): void {
     this.diagram.fitToPage();
     this.diagram.constraints = DiagramConstraints.None;
+    // const nodes = this.diagram.getNodeObject('swimlane');
+    // const shape: SwimLaneModel = nodes.shape as SwimLaneModel;
+    // this.lanes = shape.lanes as  LaneModel[];
+    // this.lanes[1].style = {fill: 'red', strokeColor: 'black', strokeWidth: 10};
   }
 
   public getConnectorDefaults(connector: ConnectorModel): ConnectorModel {
     connector.type = 'Orthogonal';
     connector.targetDecorator = {shape : 'None'};
-    connector.style = {strokeColor: '#717171'};
+    connector.style = {strokeColor: '#717171', strokeWidth: 4};
     connector.sourceDecorator = {style: {strokeColor: '#717171', fill: '#717171'}};
     connector.targetDecorator = {style: {strokeColor: '#717171', fill: '#717171'}};
     connector.constraints = ConnectorConstraints.None;

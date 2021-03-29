@@ -16,6 +16,8 @@ import {
   ZoomOptions
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
+import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
+// import {ChangeEventArgs} from '@syncfusion/ej2-buttons';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit {
   snapSettings!: SnapSettingsModel;
   nodes!: NodeModel[];
   connectors!: ConnectorModel[];
+  isSwitchChecked = false;
 
   constructor() {}
 
@@ -753,7 +756,7 @@ export class AppComponent implements OnInit {
 
   public created(): void {
     this.diagram.fitToPage();
-    this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom;
+    this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
     // const nodes = this.diagram.getNodeObject('swimlane');
     // const shape: SwimLaneModel = nodes.shape as SwimLaneModel;
     // this.lanes = shape.lanes as  LaneModel[];
@@ -833,4 +836,11 @@ export class AppComponent implements OnInit {
       this.diagram.paste();
     }
   }
+
+  switchOnChange(args: ChangeEventArgs): void {
+    if (args.checked != null){
+      this.isSwitchChecked = args.checked;
+    }
+  }
+
 }

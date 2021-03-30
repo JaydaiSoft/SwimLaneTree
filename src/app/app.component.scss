@@ -5,21 +5,23 @@
 
 #btn-zoom{
   float: right;
-  margin-right: 20px;
+  margin-right: 1%;
 }
 
 .diagram-overview{
   width: 20%;
-  height: 200px;
-  padding: 0px;
-  right: 5px;
-  bottom: 5px;
+  height: 25%;
+  padding: 0;
+  right: 0;
+  bottom: 0;
   background:#f7f7f7;
-  position:absolute
+  position:absolute;
+  margin-right: 15%;
 }
 
 #swim-lane-diagram{
   width: 100%;
+  position: relative;
 }
 
 #overview{

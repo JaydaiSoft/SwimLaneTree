@@ -4,9 +4,9 @@ import {
   ConnectorModel,
   ContextMenuSettingsModel,
   DiagramComponent,
+  DiagramConstraints,
   LaneModel,
   NodeConstraints,
-  DiagramConstraints,
   NodeModel,
   PointPortModel,
   PortConstraints,
@@ -18,6 +18,7 @@ import {
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
 // import {ChangeEventArgs} from '@syncfusion/ej2-buttons';
+import {DiagramTooltipModel} from '@syncfusion/ej2-diagrams/src/diagram/objects/tooltip-model';
 
 @Component({
   selector: 'app-root',
@@ -236,7 +237,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('START'),
+                    position: 'BottomCenter'
+                  }
                 }
               ],
             },
@@ -259,7 +264,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('ByPerson'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node3',
@@ -271,7 +280,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('Fail'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node4',
@@ -283,7 +296,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('Pass'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node5',
@@ -295,7 +312,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('Else'),
+                    position: 'BottomCenter'
+                  }
                 },
               ],
             },
@@ -318,7 +339,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...4'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node7',
@@ -330,7 +355,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('5...19'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node8',
@@ -342,7 +371,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('20...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node9',
@@ -354,7 +387,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...4'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node10',
@@ -366,7 +403,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('5...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
               ],
             },
@@ -391,7 +432,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...79'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node12',
@@ -405,7 +450,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('80...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node13',
@@ -419,7 +468,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...79'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node14',
@@ -433,7 +486,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('80...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node15',
@@ -447,7 +504,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...79'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node16',
@@ -461,7 +522,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('80...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node17',
@@ -475,7 +540,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('LOW...44.99'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node18',
@@ -489,7 +558,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('45...58.99'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node19',
@@ -503,7 +576,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#6495ED'}
+                  style: {fill: '#6495ED'},
+                  tooltip: {
+                    content: this.getTooltipContent('59...HIGH'),
+                    position: 'BottomCenter'
+                  }
                 },
               ],
             },
@@ -528,7 +605,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T2'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node21',
@@ -542,7 +623,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T1'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node22',
@@ -556,7 +641,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('NOT ASSIGNED'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node23',
@@ -570,7 +659,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('NOT ASSIGNED'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node24',
@@ -584,7 +677,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T2'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node25',
@@ -598,7 +695,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T1'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node26',
@@ -612,7 +713,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T2'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node27',
@@ -626,7 +731,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T1'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node28',
@@ -640,7 +749,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('NOT ASSIGNED'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node29',
@@ -654,7 +767,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('T2'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node30',
@@ -668,7 +785,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('NOT ASSIGNED'),
+                    position: 'BottomCenter'
+                  }
                 },
                 {
                   id: 'node31',
@@ -682,7 +803,11 @@ export class AppComponent implements OnInit {
                   height: 40,
                   width: 100,
                   ports: this.ports,
-                  style: {fill: '#BDB76B'}
+                  style: {fill: '#BDB76B'},
+                  tooltip: {
+                    content: this.getTooltipContent('NOT ASSIGNED'),
+                    position: 'BottomCenter'
+                  }
                 },
               ],
             },
@@ -756,7 +881,8 @@ export class AppComponent implements OnInit {
 
   public created(): void {
     this.diagram.fitToPage();
-    this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
+    // this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
+    this.diagram.constraints = DiagramConstraints.Default | DiagramConstraints.Zoom | DiagramConstraints.Pan;
     // const nodes = this.diagram.getNodeObject('swimlane');
     // const shape: SwimLaneModel = nodes.shape as SwimLaneModel;
     // this.lanes = shape.lanes as  LaneModel[];
@@ -775,7 +901,9 @@ export class AppComponent implements OnInit {
 
   getNodeDefaults(node: NodeModel): NodeModel {
     node.style = {strokeColor: '#717171'};
-    node.constraints = NodeConstraints.Default &~NodeConstraints.Select;
+    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip) & ~NodeConstraints.Select;
+    // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
+    // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly;
     // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.Select;
     // node.tooltip = {position: 'BottomCenter', content: 'Test Tooltip'};
     return node;
@@ -841,6 +969,23 @@ export class AppComponent implements OnInit {
     if (args.checked != null){
       this.isSwitchChecked = args.checked;
     }
+  }
+
+  public tooltip: DiagramTooltipModel = {
+    content: this.getTooltipContent(''),
+    position: 'TopLeft',
+    relativeMode: 'Object',
+    animation: {
+      open: { effect: 'FadeZoomIn', delay: 0 },
+      close: { effect: 'FadeZoomOut', delay: 0 }
+    }
+  };
+
+  public getTooltipContent(nodeContent: string): HTMLElement {
+    const tooltipContent: HTMLElement = document.createElement("div");
+    tooltipContent.innerHTML =
+      `<div style="background-color: #f4f4f4; color: black; border-width:1px;border-style: solid;border-color: #d3d3d3; white-space: nowrap;"> <span style="margin: 10px;">${nodeContent}</span> </div>`;
+    return tooltipContent;
   }
 
 }

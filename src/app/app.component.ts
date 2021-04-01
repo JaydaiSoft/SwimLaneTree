@@ -5,6 +5,7 @@ import {
   ContextMenuSettingsModel,
   DiagramComponent,
   DiagramConstraints,
+  DiagramTools,
   LaneModel,
   NodeConstraints,
   NodeModel,
@@ -17,7 +18,6 @@ import {
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
-// import {ChangeEventArgs} from '@syncfusion/ej2-buttons';
 import {DiagramTooltipModel} from '@syncfusion/ej2-diagrams/src/diagram/objects/tooltip-model';
 
 @Component({
@@ -854,6 +854,7 @@ export class AppComponent implements OnInit {
       },
     ];
   }
+  public tool: DiagramTools = DiagramTools.ZoomPan;
 
   public contextMenuSettings: ContextMenuSettingsModel = {
     // show: true, items: [
@@ -882,7 +883,8 @@ export class AppComponent implements OnInit {
   public created(): void {
     this.diagram.fitToPage();
     // this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
-    this.diagram.constraints = DiagramConstraints.Default | DiagramConstraints.Zoom | DiagramConstraints.Pan;
+    this.diagram.constraints = DiagramConstraints.Default | DiagramConstraints.Zoom
+      | DiagramConstraints.Pan;
     // const nodes = this.diagram.getNodeObject('swimlane');
     // const shape: SwimLaneModel = nodes.shape as SwimLaneModel;
     // this.lanes = shape.lanes as  LaneModel[];
@@ -901,7 +903,8 @@ export class AppComponent implements OnInit {
 
   getNodeDefaults(node: NodeModel): NodeModel {
     node.style = {strokeColor: '#717171'};
-    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip) & ~NodeConstraints.Select;
+    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly)
+      & ~NodeConstraints.Select;
     // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
     // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly;
     // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.Select;
@@ -973,7 +976,7 @@ export class AppComponent implements OnInit {
 
   public tooltip: DiagramTooltipModel = {
     content: this.getTooltipContent(''),
-    position: 'TopLeft',
+    position: 'BottomCenter',
     relativeMode: 'Object',
     animation: {
       open: { effect: 'FadeZoomIn', delay: 0 },

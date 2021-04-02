@@ -35,6 +35,9 @@ export class AppComponent implements OnInit {
   nodes!: NodeModel[];
   connectors!: ConnectorModel[];
   isSwitchChecked = false;
+  contextMenuSettings!: ContextMenuSettingsModel;
+  tooltip!: DiagramTooltipModel;
+  tool!: DiagramTools;
 
   constructor() {}
 
@@ -43,6 +46,9 @@ export class AppComponent implements OnInit {
     this.snapSettings = this.getSnapSettings();
     this.nodes = this.bindingNodesData();
     this.connectors = this.getConnectorConfig();
+    this.contextMenuSettings = this.getContextMenu();
+    this.tooltip = this.getTooltip();
+    this.setDiagramTools();
   }
 
   getConnectorConfig(): ConnectorModel[]{
@@ -854,33 +860,33 @@ export class AppComponent implements OnInit {
       },
     ];
   }
-  public tool: DiagramTools = DiagramTools.ZoomPan;
+  setDiagramTools(): void {
+    this.tool = DiagramTools.ZoomPan | DiagramTools.SingleSelect;
+  }
 
-  public contextMenuSettings: ContextMenuSettingsModel = {
-    // show: true, items: [
-    //   {
-    //     text: 'Clone', id: 'Clone', target: '.e-diagramcontent',
-    //   },
-    //   {
-    //     text: 'Cut', id: 'Cut', target: '.e-diagramcontent',
-    //   },
-    //   {
-    //     text: 'InsertLaneBefore', id: 'InsertLaneBefore', target: '.e-diagramcontent',
-    //   },
-    //   {
-    //     text: 'InsertLaneAfter', id: 'InsertLaneAfter', target: '.e-diagramcontent',
-    //   }],
-    // showCustomMenuOnly: true,
+  getContextMenu(): ContextMenuSettingsModel {
+    return {
+      show: true,
+      items: [
+        {text: 'Collapse', id: 'collapse', target: '.e-diagramcontent'},
+        {text: 'Expand', id: 'expand', target: '.e-diagramcontent'},
+        {text: 'Copy selected node and subtree', id: 'copy-selected-node-subtree', target: '.e-diagramcontent'},
+        {text: 'Paste Subtree', id: 'paste-subtree', target: '.e-diagramcontent'},
+        {text: 'Paste selected node and subtree', id: 'paste-selected-node-subtree', target: '.e-diagramcontent'},
+        {text: 'Edit Children Set of Values', id: 'edit-children-set-values', target: '.e-diagramcontent'},
+        {text: 'Change Break Values', id: 'change-break-values', target: '.e-diagramcontent'},
+        {text: 'Delete Children', id: 'delete-children', target: '.e-diagramcontent'},
+        {text: 'Edit Range', id: 'edit-range', target: '.e-diagramcontent'},
+        {text: 'Edit Values', id: 'edit-values', target: '.e-diagramcontent'},
+        {text: 'Insert Node (before)', id: 'insert-node-before', target: '.e-diagramcontent'},
+        {text: 'Remove Node', id: 'remove-node', target: '.e-diagramcontent'},
+        {text: 'Tree Assignment Definition', id: 'tree-assignment-definition', target: '.e-diagramcontent'},
+      ],
+      showCustomMenuOnly: true
+    };
+  }
 
-    show: true,
-    items: [
-      {text: 'Clone', id: 'Clone', target: '.e-diagramcontent'},
-      {text: 'Cut', id: 'Cut', target: '.e-diagramcontent'}
-    ],
-    showCustomMenuOnly: true
-  };
-
-  public created(): void {
+  created(): void {
     this.diagram.fitToPage();
     // this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
     this.diagram.constraints = DiagramConstraints.Default | DiagramConstraints.Zoom
@@ -903,17 +909,13 @@ export class AppComponent implements OnInit {
 
   getNodeDefaults(node: NodeModel): NodeModel {
     node.style = {strokeColor: '#717171'};
-    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly)
-      & ~NodeConstraints.Select;
-    // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
-    // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly;
-    // node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.Select;
-    // node.tooltip = {position: 'BottomCenter', content: 'Test Tooltip'};
+    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly | NodeConstraints.Select)
+      & ~NodeConstraints.Drag & ~NodeConstraints.Resize;
     return node;
   }
 
   // zoom operation at runtime
-  ZoomIn(): void {
+  zoomIn(): void {
     const zoomOptions: ZoomOptions = {
       type: 'ZoomIn',
       // Sets the factor by which we can zoom in or zoom out
@@ -923,7 +925,7 @@ export class AppComponent implements OnInit {
     this.diagram.zoomTo(zoomOptions);
   }
 
-  ZoomOut(): void {
+  zoomOut(): void {
     const zoomOptions: ZoomOptions = {
       type: 'ZoomOut',
       // Sets the factor by which we can zoom in or zoom out
@@ -933,38 +935,55 @@ export class AppComponent implements OnInit {
     this.diagram.zoomTo(zoomOptions);
   }
 
-  // public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
-  //   for (const item of args.items) {
-  //     if (item.text != null) {
-  //       args.hiddenItems.push(item.text);
-  //     }
-  //   }
-  // }
-
-  // public contextMenuClick(args: MenuEventArgs): void {
-  //   if (args.item.id === 'Cut') {
-  //     this.diagram.cut();
-  //   } else if (args.item.id === 'Clone') {
-  //     this.diagram.copy();
-  //     this.diagram.paste();
-  //   }
-  // }
-
   contextMenuOpen(args: BeforeOpenCloseMenuEventArgs): void {
-    // do your custom action here.
-    if (args.items.length > 0){
-      for (const item of args.items) {
-        args.items.push(item);
-      }
+    // to get a node
+    // @ts-ignore
+    const selectedItems: any = this.diagram.selectedItems.nodes[0];
+    if (selectedItems.isLane) {
+      // cancel a event if it is a diagram.
+      args.cancel = true;
     }
   }
 
   contextMenuClick(args: MenuEventArgs): void {
-    if (args.item.id === 'Cut') {
-      this.diagram.cut();
-    } else if (args.item.id === 'Clone') {
-      this.diagram.copy();
-      this.diagram.paste();
+    if (args.item.id === 'collapse') {
+      alert('Do collapse function');
+    }
+    else if (args.item.id === 'expand') {
+      alert('Do expand function');
+    }
+    else if (args.item.id === 'copy-selected-node-subtree') {
+      alert('Do Copy selected node and subtree function');
+    }
+    else if (args.item.id === 'paste-subtree') {
+      alert('Do Paste Subtree function');
+    }
+    else if (args.item.id === 'paste-selected-node-subtree') {
+      alert('Do Paste selected node and subtree function');
+    }
+    else if (args.item.id === 'edit-children-set-values') {
+      alert('Do Edit Children Set of Values function');
+    }
+    else if (args.item.id === 'change-break-values') {
+      alert('Do Change Break Values function');
+    }
+    else if (args.item.id === 'delete-children') {
+      alert(' Do Delete Children function');
+    }
+    else if (args.item.id === 'edit-range') {
+      alert('Do Edit Range function');
+    }
+    else if (args.item.id === 'edit-values') {
+      alert('Do Edit Values function');
+    }
+    else if (args.item.id === 'insert-node-before') {
+      alert('Do Insert Node (before) function');
+    }
+    else if (args.item.id === 'remove-node') {
+      alert('Do Remove Node function');
+    }
+    else if (args.item.id === 'tree-assignment-definition') {
+      alert('Do Tree Assignment Definition function');
     }
   }
 
@@ -974,15 +993,17 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public tooltip: DiagramTooltipModel = {
-    content: this.getTooltipContent(''),
-    position: 'BottomCenter',
-    relativeMode: 'Object',
-    animation: {
-      open: { effect: 'FadeZoomIn', delay: 0 },
-      close: { effect: 'FadeZoomOut', delay: 0 }
-    }
-  };
+  getTooltip(): DiagramTooltipModel {
+    return  {
+      content: this.getTooltipContent(''),
+      position: 'BottomCenter',
+      relativeMode: 'Object',
+      animation: {
+        open: { effect: 'FadeZoomIn', delay: 0 },
+        close: { effect: 'FadeZoomOut', delay: 0 }
+      }
+    };
+  }
 
   public getTooltipContent(nodeContent: string): HTMLElement {
     const tooltipContent: HTMLElement = document.createElement("div");

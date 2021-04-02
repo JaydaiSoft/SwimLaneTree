@@ -7,8 +7,8 @@
         <ejs-switch id="checked" [checked]="isSwitchChecked" (change)="switchOnChange($event)"></ejs-switch>
       </div>
       <div id="btn-zoom" class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-        <button ejs-button (click)="ZoomIn()">ZoomIn</button>
-        <button ejs-button (click)="ZoomOut()">ZoomOut</button>
+        <button ejs-button (click)="zoomIn()">ZoomIn</button>
+        <button ejs-button (click)="zoomOut()">ZoomOut</button>
       </div>
       <ejs-diagram #diagram id="diagram"
                    [snapSettings]='snapSettings'
@@ -19,6 +19,8 @@
                    [tooltip]='tooltip'
                    [tool]='tool'
                    [contextMenuSettings]='contextMenuSettings'
+                   (contextMenuOpen)='contextMenuOpen($event)'
+                   (contextMenuClick)='contextMenuClick($event)'
                    (created)="created()">
       </ejs-diagram>
     </div>

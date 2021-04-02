@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {DiagramModule, OverviewModule} from '@syncfusion/ej2-angular-diagrams';
+import {DiagramModule, OverviewModule, DiagramContextMenuService} from '@syncfusion/ej2-angular-diagrams';
 import {ButtonModule, SwitchModule} from '@syncfusion/ej2-angular-buttons';
 
 @NgModule({
@@ -18,7 +18,7 @@ import {ButtonModule, SwitchModule} from '@syncfusion/ej2-angular-buttons';
     OverviewModule,
     SwitchModule
   ],
-  providers: [],
+  providers: [DiagramContextMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

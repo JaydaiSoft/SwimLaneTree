@@ -1014,7 +1014,7 @@ export class AppComponent implements OnInit {
     };
   }
 
-  public getTooltipContent(nodeContent: string): HTMLElement {
+  getTooltipContent(nodeContent: string): HTMLElement {
     const tooltipContent: HTMLElement = document.createElement("div");
     tooltipContent.innerHTML =
       `<div style="background-color: #f4f4f4; color: black; border-width:1px;border-style: solid;border-color: #d3d3d3; white-space: nowrap;"> <span style="margin: 10px;">${nodeContent}</span> </div>`;

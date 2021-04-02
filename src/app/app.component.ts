@@ -254,6 +254,7 @@ export class AppComponent implements OnInit {
                   }
                 }
               ],
+              canMove: false
             },
             {
               id: 'stackCanvas2',
@@ -329,6 +330,7 @@ export class AppComponent implements OnInit {
                   }
                 },
               ],
+              canMove: false
             },
             {
               id: 'stackCanvas3',
@@ -420,6 +422,7 @@ export class AppComponent implements OnInit {
                   }
                 },
               ],
+              canMove: false
             },
             {
               id: 'stackCanvas4',
@@ -593,6 +596,7 @@ export class AppComponent implements OnInit {
                   }
                 },
               ],
+              canMove: false
             },
             {
               id: 'stackCanvas5',
@@ -820,6 +824,7 @@ export class AppComponent implements OnInit {
                   }
                 },
               ],
+              canMove: false
             },
           ]
         },
@@ -893,8 +898,8 @@ export class AppComponent implements OnInit {
   created(): void {
     this.diagram.fitToPage();
     // this.diagram.constraints = DiagramConstraints.Default &DiagramConstraints.Zoom |DiagramConstraints.Pan;
-    this.diagram.constraints = DiagramConstraints.Default | DiagramConstraints.Zoom
-      | DiagramConstraints.Pan;
+    this.diagram.constraints = (DiagramConstraints.Default | DiagramConstraints.Zoom
+      | DiagramConstraints.Pan);
     // const nodes = this.diagram.getNodeObject('swimlane');
     // const shape: SwimLaneModel = nodes.shape as SwimLaneModel;
     // this.lanes = shape.lanes as  LaneModel[];

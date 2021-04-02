@@ -948,7 +948,7 @@ export class AppComponent implements OnInit {
     // to get a node
     // @ts-ignore
     const selectedItems: any = this.diagram.selectedItems.nodes[0];
-    if (selectedItems.isLane) {
+    if (!(selectedItems) || (selectedItems.isLane)) {
       // cancel a event if it is a diagram.
       args.cancel = true;
     }

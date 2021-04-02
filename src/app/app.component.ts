@@ -12,6 +12,7 @@ import {
   PointPortModel,
   PortConstraints,
   PortVisibility,
+  SelectorConstraints,
   SnapConstraints,
   SnapSettingsModel,
   ZoomOptions
@@ -19,6 +20,7 @@ import {
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
 import {DiagramTooltipModel} from '@syncfusion/ej2-diagrams/src/diagram/objects/tooltip-model';
+import {SelectorModel} from '@syncfusion/ej2-diagrams/src/diagram/objects/node-model';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit {
   contextMenuSettings!: ContextMenuSettingsModel;
   tooltip!: DiagramTooltipModel;
   tool!: DiagramTools;
+  selectedItems!: SelectorModel;
 
   constructor() {}
 
@@ -49,6 +52,7 @@ export class AppComponent implements OnInit {
     this.contextMenuSettings = this.getContextMenu();
     this.tooltip = this.getTooltip();
     this.setDiagramTools();
+    this.selectedItems = {constraints: SelectorConstraints.None};
   }
 
   getConnectorConfig(): ConnectorModel[]{
@@ -861,7 +865,7 @@ export class AppComponent implements OnInit {
     ];
   }
   setDiagramTools(): void {
-    this.tool = DiagramTools.ZoomPan | DiagramTools.SingleSelect;
+    this.tool = DiagramTools.SingleSelect;
   }
 
   getContextMenu(): ContextMenuSettingsModel {

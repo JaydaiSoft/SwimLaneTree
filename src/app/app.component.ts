@@ -15,7 +15,8 @@ import {
   SelectorConstraints,
   SnapConstraints,
   SnapSettingsModel,
-  ZoomOptions
+  ZoomOptions,
+  DiagramBeforeMenuOpenEventArgs
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
@@ -877,11 +878,16 @@ export class AppComponent implements OnInit {
     return {
       show: true,
       items: [
-        {text: 'Collapse', id: 'collapse', target: '.e-diagramcontent'},
+        {text: 'Change Decision Value', id: 'change-decision-value', target: '.e-diagramcontent'},
+        {text: 'Insert Decision Value', id: 'insert-decision-value', target: '.e-diagramcontent'},
+        {text: 'Delete Decision Value', id: 'delete-decision-value', target: '.e-diagramcontent'},
         {text: 'Expand', id: 'expand', target: '.e-diagramcontent'},
+        {text: 'Collapse', id: 'collapse', target: '.e-diagramcontent'},
+        {separator: true},
         {text: 'Copy selected node and subtree', id: 'copy-selected-node-subtree', target: '.e-diagramcontent'},
         {text: 'Paste Subtree', id: 'paste-subtree', target: '.e-diagramcontent'},
         {text: 'Paste selected node and subtree', id: 'paste-selected-node-subtree', target: '.e-diagramcontent'},
+        {separator: true},
         {text: 'Edit Children Set of Values', id: 'edit-children-set-values', target: '.e-diagramcontent'},
         {text: 'Change Break Values', id: 'change-break-values', target: '.e-diagramcontent'},
         {text: 'Delete Children', id: 'delete-children', target: '.e-diagramcontent'},
@@ -944,13 +950,36 @@ export class AppComponent implements OnInit {
     this.diagram.zoomTo(zoomOptions);
   }
 
-  contextMenuOpen(args: BeforeOpenCloseMenuEventArgs): void {
-    // to get a node
+  contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
+    const headerMenus = args.items.filter(({id}) => {
+      // @ts-ignore
+      return ['change-decision-value', 'insert-decision-value', 'delete-decision-value'].includes(id);
+    }).map(item => item.id);
+
+    const nodeMenus = args.items.filter(({id}) => {
+      // @ts-ignore
+      return !['change-decision-value', 'insert-decision-value', 'delete-decision-value'].includes(id);
+    }).map(item => item.id);
+
     // @ts-ignore
     const selectedItems: any = this.diagram.selectedItems.nodes[0];
-    if (!(selectedItems) || (selectedItems.isLane)) {
-      // cancel a event if it is a diagram.
-      args.cancel = true;
+    for (const item of args.items) {
+      if (selectedItems.isLane) {
+        // @ts-ignore
+        if (selectedItems.id.includes('header') && nodeMenus.includes(item.id)) {
+          // @ts-ignore
+          args.hiddenItems.push(item.id);
+        }
+        if (!selectedItems.id.includes('header')) {
+          // @ts-ignore
+          args.hiddenItems.push(item.id);
+        }
+      } else {
+        if (selectedItems.id.includes('node') && headerMenus.includes(item.id)) {
+          // @ts-ignore
+          args.hiddenItems.push(item.id);
+        }
+      }
     }
   }
 
@@ -993,6 +1022,15 @@ export class AppComponent implements OnInit {
     }
     else if (args.item.id === 'tree-assignment-definition') {
       alert('Do Tree Assignment Definition function');
+    }
+    else if (args.item.id === 'change-decision-value') {
+      alert('Do Change Decision value function');
+    }
+    else if (args.item.id === 'insert-decision-value') {
+      alert('Do Insert Decision value function');
+    }
+    else if (args.item.id === 'delete-decision-value') {
+      alert('Do Delete Decision value function');
     }
   }
 

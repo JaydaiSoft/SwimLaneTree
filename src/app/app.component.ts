@@ -964,21 +964,26 @@ export class AppComponent implements OnInit {
     // @ts-ignore
     const selectedItems: any = this.diagram.selectedItems.nodes[0];
     for (const item of args.items) {
-      if (selectedItems.isLane) {
-        // @ts-ignore
-        if (selectedItems.id.includes('header') && nodeMenus.includes(item.id)) {
+      if (selectedItems) {
+        if (selectedItems.isLane) {
           // @ts-ignore
-          args.hiddenItems.push(item.id);
-        }
-        if (!selectedItems.id.includes('header')) {
-          // @ts-ignore
-          args.hiddenItems.push(item.id);
+          if (selectedItems.id.includes('header') && nodeMenus.includes(item.id)) {
+            // @ts-ignore
+            args.hiddenItems.push(item.id);
+          }
+          if (!selectedItems.id.includes('header')) {
+            // @ts-ignore
+            args.hiddenItems.push(item.id);
+          }
+        } else {
+          if (selectedItems.id.includes('node') && headerMenus.includes(item.id)) {
+            // @ts-ignore
+            args.hiddenItems.push(item.id);
+          }
         }
       } else {
-        if (selectedItems.id.includes('node') && headerMenus.includes(item.id)) {
-          // @ts-ignore
-          args.hiddenItems.push(item.id);
-        }
+        // @ts-ignore
+        args.hiddenItems.push(item.id);
       }
     }
   }

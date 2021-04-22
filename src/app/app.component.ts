@@ -16,7 +16,7 @@ import {
   SnapConstraints,
   SnapSettingsModel,
   ZoomOptions,
-  DiagramBeforeMenuOpenEventArgs
+  DiagramBeforeMenuOpenEventArgs, SwimLaneModel
 } from '@syncfusion/ej2-angular-diagrams';
 import {BeforeOpenCloseMenuEventArgs, MenuEventArgs} from '@syncfusion/ej2-splitbuttons';
 import {ChangeEventArgs} from '@syncfusion/ej2-angular-buttons';
@@ -924,8 +924,17 @@ export class AppComponent implements OnInit {
 
   getNodeDefaults(node: NodeModel): NodeModel {
     node.style = {strokeColor: '#717171'};
-    node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly | NodeConstraints.Select)
-      & ~NodeConstraints.Drag & ~NodeConstraints.Resize;
+    // node.constraints = (NodeConstraints.Default | NodeConstraints.Tooltip | NodeConstraints.ReadOnly | NodeConstraints.Select)
+    //   & ~NodeConstraints.Drag & ~NodeConstraints.Resize;
+    if (!(node as SwimLaneModel).isLane) {
+      node.constraints =
+        (NodeConstraints.Default |
+          NodeConstraints.Tooltip |
+          NodeConstraints.ReadOnly |
+          NodeConstraints.Select) &
+        ~NodeConstraints.Drag &
+        ~NodeConstraints.Resize;
+    }
     return node;
   }
 
